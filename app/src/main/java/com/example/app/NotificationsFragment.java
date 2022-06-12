@@ -33,13 +33,13 @@ public class NotificationsFragment extends Fragment {
     /**
      * Button to show a notification.
      */
-    private Button mShowNotificationButton;
+    private Button mShowNotificationButton, volvoBtn;
 
     /**
      * If checked, notifications that this Fragment creates will be displayed as Heads-Up
      * Notifications.
      */
-    private CheckBox mUseHeadsUpCheckbox;
+    //private CheckBox mUseHeadsUpCheckbox;
 
     /**
      * Use this factory method to create a new instance of
@@ -79,15 +79,24 @@ public class NotificationsFragment extends Fragment {
         mShowNotificationButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mNotificationManager.notify(NOTIFICATION_ID, createNotification(
-                        mUseHeadsUpCheckbox.isChecked()));
+               // mNotificationManager.notify(NOTIFICATION_ID, createNotification(
+                 //       mUseHeadsUpCheckbox.isChecked()));
                 Toast.makeText(getActivity(), "Corsa rented", Toast.LENGTH_SHORT).show();
             }
         });
 
-        mUseHeadsUpCheckbox = (CheckBox) view.findViewById(R.id.use_heads_up_checkbox);
+        //mUseHeadsUpCheckbox = (CheckBox) view.findViewById(R.id.use_heads_up_checkbox);
 
-    }
+        volvoBtn = (Button) view.findViewById(R.id.volvobtn);
+        volvoBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Toast.makeText(getActivity(), "Volvo rented", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+
+        }
 
     /**
      * Creates a new notification depending on the argument.
@@ -101,7 +110,8 @@ public class NotificationsFragment extends Fragment {
      *
      * @return A Notification instance.
      */
-    private Notification createNotification(boolean makeHeadsUpNotification) {
+
+    /*private Notification createNotification(boolean makeHeadsUpNotification) {
         Notification.Builder notificationBuilder = new Notification.Builder(getActivity())
                 .setSmallIcon(R.drawable.ic_stat_name)
                 .setPriority(Notification.PRIORITY_DEFAULT)
@@ -111,7 +121,7 @@ public class NotificationsFragment extends Fragment {
         if (makeHeadsUpNotification) {
             Intent push = new Intent();
             push.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            push.setClass(getActivity(), NotificationsFragment.class);
+            push.setClass(getActivity(), MainActivity2.class);
 
             PendingIntent fullScreenPendingIntent = PendingIntent.getActivity(getActivity(), 0,
                     push, PendingIntent.FLAG_CANCEL_CURRENT);
@@ -120,5 +130,5 @@ public class NotificationsFragment extends Fragment {
                     .setFullScreenIntent(fullScreenPendingIntent, true);
         }
         return notificationBuilder.build();
-    }
+    }*/
 }

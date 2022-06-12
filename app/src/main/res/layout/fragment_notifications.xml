@@ -91,17 +91,18 @@
         app:layout_constraintStart_toEndOf="@+id/imageView17"
         app:layout_constraintTop_toBottomOf="@+id/textView31" />
 
-    <CheckBox
-        android:id="@+id/use_heads_up_checkbox"
-        android:layout_width="wrap_content"
+    <TextView
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="#0C0C0C"
-        android:minHeight="48dp"
-        android:text="use_heads_up_checkbox"
-        android:textAlignment="center"
-        android:textColor="#00897B"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/volvobtn" />
+        app:layout_constraintTop_toBottomOf="@+id/imageView17"
+        android:text="Choose of one of the 2 best models!"
+        android:textColor="@color/black"
+        android:textAlignment="center"
+        android:textSize="24dp"
+        app:layout_constraintVertical_bias="0.432" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
