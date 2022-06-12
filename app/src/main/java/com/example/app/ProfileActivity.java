@@ -69,6 +69,7 @@ public class ProfileActivity extends AppCompatActivity {
         changeProfileImage = findViewById(R.id.changeProfile);
         storageReference = FirebaseStorage.getInstance().getReference();
 
+
         StorageReference profileRef = storageReference.child("users/"+fAuth.getCurrentUser().getUid()+"/profile.jpg"); //dakle, mora biti profile.jpg, inace se image nce retrievati, a moramo imati sdtories, for the every user registrated on our app
         //ovo iznad je directory users/unutar njega je profile.jpg
         profileRef.getDownloadUrl().addOnSuccessListener(new OnSuccessListener<Uri>() {

@@ -3,7 +3,11 @@ package com.example.app;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
@@ -126,5 +130,26 @@ public class Login extends AppCompatActivity {
                 passwordResetDialog.create().show();
             }
         });
+        /*/notifyBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = "You are logged in.";
+                NotificationCompat.Builder builder = new NotificationCompat.Builder(Login.this)
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setContentTitle("New Notification")
+                .setContentText(message)
+                .setAutoCancel(true);
+
+                Intent intent = new Intent(Login.this, Login.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                intent.putExtra("message", message);
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(Login.this, 0, intent, PendingIntent.FLAG_UPDATE_CURRENT);
+                builder.setContentIntent(pendingIntent);
+
+                NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
+                notificationManager.notify(0, builder.build());
+            }
+        });*/
     }
 }

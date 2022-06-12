@@ -2,9 +2,15 @@ package com.example.app;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 
+import android.app.NotificationChannel;
+import android.app.NotificationManager;
+import android.app.PendingIntent;
 import android.content.Intent;
+import android.graphics.Color;
 import android.nfc.Tag;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
@@ -32,12 +38,15 @@ public class Register extends AppCompatActivity {
 
     public static final String TAG = "TAG";
     EditText mFullName, mEmail, mPassword, mPhone;
-    Button mRegisterBtn;
+    Button mRegisterBtn, notify_me;
     TextView mLoginBtn;
     FirebaseAuth fAuth;
     ProgressBar progressBar;
     FirebaseFirestore fStore;
     String userID;
+    private static final String PRIMARY_CHANNEL_ID = "primary_notification_channel";
+    private NotificationManager notifyManager;
+    private static final int NOTIFICATION_ID = 0;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,6 +62,7 @@ public class Register extends AppCompatActivity {
         fAuth = FirebaseAuth.getInstance();
         progressBar = findViewById(R.id.progressBar);
         fStore = FirebaseFirestore.getInstance();
+        notify_me = findViewById(R.id.notify);
 
         //if account is already created
 
@@ -145,5 +155,54 @@ public class Register extends AppCompatActivity {
             }
         });
         progressBar.setVisibility(View.GONE);
+
+
+        // DIO ZA NOTIFIKACIJE
+
+        notify_me = findViewById(R.id.notify);
+        notify_me.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendNotification();
+            }
+        });
+
+        createNotificationChannel();
+    }
+    public void sendNotification()
+    {
+        NotificationCompat.Builder notifyBuilder = getNotificationBuilder();
+        notifyManager.notify(NOTIFICATION_ID, notifyBuilder.build());
+    }
+    //@RequiresApi(api = Build.VERSION_CODES.O)
+    public void createNotificationChannel()
+    {
+        notifyManager = (NotificationManager) getSystemService(NOTIFICATION_SERVICE);
+        if (android.os.Build.VERSION.SDK_INT >= Build.VERSION_CODES.O){
+            NotificationChannel notificationChannel = new NotificationChannel(PRIMARY_CHANNEL_ID, "MY notification", NotificationManager.IMPORTANCE_DEFAULT);
+
+            notificationChannel.enableLights(true);
+            notificationChannel.setLightColor(Color.BLUE);
+            notificationChannel.enableVibration(true);
+            notificationChannel.setDescription("This is my notification!");
+
+            notifyManager.createNotificationChannel(notificationChannel);
+        }
+    }
+
+    private NotificationCompat.Builder getNotificationBuilder()
+    {
+        Intent notificationIntent = new Intent(this, Register.class);
+        PendingIntent pendingNotificationIntent = PendingIntent.getActivity(this, NOTIFICATION_ID, notificationIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+        NotificationCompat.Builder notifyBuilder = new NotificationCompat.Builder(this, PRIMARY_CHANNEL_ID)
+                .setSmallIcon(R.drawable.ic_stat_name)
+                .setContentTitle("REGISTRUJ SE!")
+                .setContentText("Popuni sva polja.")
+                .setContentIntent(pendingNotificationIntent)
+                .setAutoCancel(true);
+
+        return notifyBuilder;
+
+
     }
 }
